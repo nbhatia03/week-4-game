@@ -34,23 +34,33 @@ function makeCharacter(character){
         "data-BAP": character.BAP
     })
     $('#characters').append(characterDiv);
-    characterDiv.one('click', function(){
-        var character = $(this);
-        $('#player').prepend(character);
-        chooseRandEnemy();
-        $('.character').off();
-        character.attr("id","playerChar")
-        .find('img').addClass("flipped");
-        $('#attack').removeClass("invisible");
+    
+    characterDiv.on('click', function(){
+        //if a player hasn't been selected
+        if($('#player').children('.character').length === 0){
+            var character = $(this);
+            $('#player').prepend(character);
+            $(this).off();
+            character.attr("id","playerChar")
+            .find('img').addClass("flipped");
+        } //if a player's been selected and an enemy hasn't
+        else if($('#player').children('.character').length > 0 && $('#opponent').children().length === 0){
+            $('#opponent').append($(this));
+            $('#attack').removeClass("invisible");
+            console.log('This is your opponent');
+        }//if a player and opponent have been selected
+        else{
+            console.log('Defeat your opponent first')
+        }
     })
 
 }
 
-function chooseRandEnemy(){
-    var charNum = $('#characters > .character').length;
-    var randCharNum = Math.floor( (Math.random() * charNum) + 1 )
-    $('#opponent').append($('#characters > .character:nth-child(' + randCharNum + ')'));
-}
+// function chooseRandEnemy(){
+//     var charNum = $('#characters > .character').length;
+//     var randCharNum = Math.floor( (Math.random() * charNum) + 1 )
+//     $('#opponent').append($('#characters > .character:nth-child(' + randCharNum + ')'));
+// }
 
 function attack(){
     var player = $('#player > #playerChar'),
@@ -73,8 +83,10 @@ function attack(){
     player.attr('data-ap', playerAP);
 
     if(opponentHP <= 0){
+        opponent.children('.charHP').text('');
         $('#graveyard').append(opponent);
-        chooseRandEnemy();
+        $('#attack').addClass('invisible');
+        
     }
 
     
