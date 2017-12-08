@@ -1,3 +1,5 @@
+
+
 function Character(charname){
     this.name = charname;
     this.HP = Math.floor(Math.random() * 50) + 101;
@@ -50,16 +52,23 @@ function makeCharacter(character){
     $('#characters').append(characterDiv);
     
     characterDiv.on('click', function(){
+        var character = $(this);
         //if a player hasn't been selected
         if($('#player').children('.character').length === 0){
-            var character = $(this);
-            $('#player').prepend(character);
-            $(this).off();
-            character.attr("id","playerChar")
-            .find('img').addClass("flipped");
+            character.hide('slow');
+            $(this).off()
+            setTimeout(function(){
+                $('#player').prepend(character);
+                character.attr("id","playerChar")
+                .find('img').addClass("flipped");
+                character.show('slow');
+            }, 1000)
         } //if a player's been selected and an enemy hasn't
         else if($('#player').children('.character').length > 0 && $('#opponent').children().length === 0){
-            $('#opponent').append($(this));
+            character.hide('slow').show('slow');
+            setTimeout(function(){
+                $('#opponent').append(character)
+            }, 600)
             $('#attack').removeClass("invisible");
             console.log('This is your opponent');
         }//if a player and opponent have been selected
@@ -110,3 +119,7 @@ $('#attack').on('click', attack);
 
 characters.forEach(makeCharacter);
 
+
+
+//Add timeout events when attack button is pressed
+//Possibly turn images to Gifs
