@@ -7,8 +7,22 @@ function Character(charname){
     this.img = "assets/images/" + charname + ".png";
 }
 
+//Shuffle the array of characters in order to choose random ones
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
 //*IMPORTANT* These names need to match up EXACTLY with img names to work *IMPORTANT*
-var charNames = ['Luke', 'Vader', 'Boba', 'Han', 'Ewok'];
+var allCharacters = ['Luke', 'Vader', 'Boba', 'Han', 'Ewok', 'C-3PO', 'Jawa', 'Lando', 'Leia', 'R2-D2', 'Yoda', 'Stormtrooper']
+
+shuffleArray(allCharacters);
+
+var charNames = [allCharacters[0], allCharacters[1], allCharacters[2], allCharacters[3], allCharacters[4] ];
 
 var characters = charNames.map(function(v,i){
     var char  = new Character(v);
@@ -86,7 +100,6 @@ function attack(){
         opponent.children('.charHP').text('');
         $('#graveyard').append(opponent);
         $('#attack').addClass('invisible');
-        
     }
 
     
