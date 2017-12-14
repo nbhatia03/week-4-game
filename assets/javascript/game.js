@@ -59,6 +59,8 @@ function makeCharacter(character){
         if($('#player').children('.character').length === 0){
             character.hide('slow');
             $(this).off();
+            $('#playerText').text('');
+            $('#opponentText').text('Choose Your Opponent');
             setTimeout(function(){
                 $('#player').prepend(character);
                 character.attr("id","playerChar")
@@ -66,8 +68,9 @@ function makeCharacter(character){
                 character.show('slow');
             }, 1000)
         } //if a player's been selected and an enemy hasn't
-        else if($('#player').children('.character').length > 0 && $('#opponent').children().length === 0){
+        else if($('#player').children('.character').length > 0 && $('#opponent').children().length === 1){
             $(this).off();
+            $('#opponentText').text('')
             character.hide('slow').show('slow');
             setTimeout(function(){
                 $('#opponent').append(character)
@@ -107,6 +110,11 @@ function attack(){
         opponent.children('.charHP').text('');
         $('#graveyard').append(opponent);
         $('#attack').addClass('invisible');
+        if($('#characters').children().length === 0){
+            $('#opponentText').text('You win!')
+        }else{
+            $('#opponentText').text('Choose Your Opponent')
+        }
     }else{
         playerHP -= opponentCP;
         player.attr('data-hp', playerHP);

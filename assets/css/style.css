@@ -11,3 +11,13 @@
     -ms-transform: scale(-1, 1);
     
 }
+
+#player, #opponent{
+    text-align: center;
+    position: relative
+}
+
+#playerText, #opponentText{
+    top: 50px;
+    position: absolute;
+}
